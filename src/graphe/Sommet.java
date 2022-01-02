@@ -54,6 +54,8 @@ public class Sommet implements Comparable<Sommet>{
 
     @Override
     public int compareTo(Sommet o) {
+        if(this==o)
+            return 0;
         if(o.isRed() && !this.isRed())
             return 1;
         if(!o.isRed() && this.isRed())

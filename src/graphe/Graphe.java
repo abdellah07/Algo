@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 public class Graphe {
     List<Sommet> listeSommets;
     List<Vecteur> listVecteurs;
-    int NOMBRE = 5;
+    int NOMBRE = 100;
 
     public List<Vecteur> getListVecteurs() {
         return listVecteurs;
@@ -52,38 +52,18 @@ public class Graphe {
 
         // changer la couleur des sommets visés par les flèches
         Vecteur v = findVecteur(valeur);
-        int indexOfVecteur1 = -1;
 
-        //listVecteurs.stream().filter(vecteur -> vecteur.getSommet1().getValeur() == valeur || vecteur.getSommet2().getValeur() == valeur);
+        List<Vecteur> vecteurs =  listVecteurs.stream().filter(vecteur -> vecteur.getSommet1().getValeur() == valeur || vecteur.getSommet2().getValeur() == valeur).collect(Collectors.toList());
 
-        if(v != null){
-            indexOfVecteur1 = listVecteurs.indexOf(v);
-
-            Couleur c = v.getCouleur();
-            if(indexOfVecteur1 > -1 && v.getSens() == SensVecteur.DROITE){
-                v.getSommet2().setCouleur(c);
+        for (Vecteur vecteur: vecteurs){
+            if(vecteur.getSens().equals(SensVecteur.DROITE) && vecteur.getSommet2().getValeur() != valeur && vecteur.getSommet2().getCouleur()!=vecteur.getCouleur()){
+                vecteur.getSommet2().setCouleur(vecteur.getCouleur());
+            }else if(vecteur.getSens().equals(SensVecteur.GAUCHE) && vecteur.getSommet1().getValeur() != valeur && vecteur.getSommet1().getCouleur()!=vecteur.getCouleur()){
+                vecteur.getSommet1().setCouleur(vecteur.getCouleur());
             }
+            listVecteurs.remove(vecteur);
         }
-
-        v = findVecteur(valeur - 1);
-        int indexOfVecteur2 = -1;
-
-        if(v != null){
-            indexOfVecteur2 = listVecteurs.indexOf(v);
-
-            if(indexOfVecteur2 > -1 && indexSommet > 0){
-                Couleur c1 = v.getCouleur();
-                if(v.getSens() == SensVecteur.GAUCHE) {
-                    v.getSommet1().setCouleur(c1);
-                }
-            }
-        }
-
         listeSommets.remove(indexSommet);
-        if(indexOfVecteur1 > -1) listVecteurs.remove(indexOfVecteur1);
-        if(indexOfVecteur2 > -1 && indexSommet > 0){
-            listVecteurs.remove(indexOfVecteur2);
-        }
     }
 
     public Sommet findSommet(int index){

@@ -13,7 +13,7 @@ public class ClasseInstance {
         nextStep();
     }
 
-    public void nextStep(){
+    public static void nextStep(){
         int sSommetsRouge = 0;
         int sVecteursRouge = 0;
 
@@ -28,10 +28,20 @@ public class ClasseInstance {
                 sVecteursRouge += 1;
             }
         }
+        /**
+            System.out.println(graphe);
+            System.out.println("sSommetsRouge : " + sSommetsRouge);
+            System.out.println("sVecteursRouge : " + sVecteursRouge);
+         */
+    }
 
-        System.out.println(graphe);
-        System.out.println("sSommetsRouge : " + sSommetsRouge);
-        System.out.println("sVecteursRouge : " + sVecteursRouge);
+    public static void reset(){
+        graphe = null;
+    }
+
+    public static void instaceGraphe(double p, double q) {
+        graphe = new Graphe(p, q, 0.5);
+        nextStep();
     }
 
     public void deleteSommet(int index){
