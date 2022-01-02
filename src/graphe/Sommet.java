@@ -72,7 +72,7 @@ public class Sommet implements Comparable<Sommet>{
         List<Vecteur> vectorRouge1 = vectorSorta1.stream().filter(vecteur -> vecteur.getCouleur().equals(Couleur.ROUGE)).collect(Collectors.toList());
         List<Vecteur> vectorRouge2 = vectorSorta2.stream().filter(vecteur -> vecteur.getCouleur().equals(Couleur.ROUGE)).collect(Collectors.toList());
 
-        value1 += vectorRouge1.size();
+        value1 += vectorRouge1.size()+0.1;
         value2 += vectorRouge2.size();
 
         return Integer.compare(value1,value2);

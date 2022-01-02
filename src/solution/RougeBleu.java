@@ -39,6 +39,7 @@ public class RougeBleu {
             if (!sommets.get(0).isRed())
                 break;
             graphe.supprimerSommet(sommets.get(0).getValeur());
+            k++;
         }while(true);
         return graphe;
     }
