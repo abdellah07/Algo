@@ -22,7 +22,7 @@ public class Sommet implements Comparable<Sommet>{
         this.couleur = couleur;
     }
 
-    public Sommet(int valeur, Couleur couleur,Graphe graphe) {
+    public Sommet(int valeur, Couleur couleur) {
         this.valeur = valeur;
         this.couleur = couleur;
     }

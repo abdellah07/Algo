@@ -11,13 +11,13 @@ public class RougeBleu {
     public static void main(String[] args) {
         ClasseInstance cI = new ClasseInstance(0.5, 0.5);
         Graphe graphe = ClasseInstance.graphe;
-        System.out.println("####################################################################################");
-        System.out.println(ClasseInstance.graphe);
-        System.out.println("####################################################################################");
-        System.out.println(resolve());
         System.out.println("Nombre de rouge"+graphe.nombreDeRouge());
         System.out.println("Nombre de bleu"+graphe.nombreDeBleu());
-
+        System.out.println("####################################################################################");
+        System.out.println(resolve());
+        System.out.println("####################################################################################");
+        System.out.println("Nombre de rouge"+graphe.nombreDeRouge());
+        System.out.println("Nombre de bleu"+graphe.nombreDeBleu());
     }
 
     static Graphe resolve(){
@@ -31,7 +31,8 @@ public class RougeBleu {
                 break;
             graphe.supprimerSommet(sommets.get(0).getValeur());
         }while(true);
-
         return graphe;
     }
+
+
 }

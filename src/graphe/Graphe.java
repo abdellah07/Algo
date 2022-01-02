@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 public class Graphe {
     List<Sommet> listeSommets;
     List<Vecteur> listVecteurs;
+    int NOMBRE = 5;
 
     public List<Vecteur> getListVecteurs() {
         return listVecteurs;
@@ -26,32 +27,34 @@ public class Graphe {
     }
 
     private void construireSommets(double p){
-        for(int i = 0; i < 100; i++){
+        for(int i = 0; i < NOMBRE; i++){
             this.listeSommets.add(new Sommet(i, p));
         }
     }
 
     private void construireVecteurs(double q, double r){
-        for(int i = 0; i < 99; i++){
+        for(int i = 0; i < NOMBRE-1; i++){
             this.listVecteurs.add(new Vecteur(q, r, this.listeSommets.get(i), this.listeSommets.get(i+1)));
         }
     }
 
-    public void supprimerSommet(int index){
-        int indexSommet = findIndexSommet(index);
+    public void supprimerSommet(int valeur){
+        int indexSommet = findIndexSommet(valeur);
 
         if(indexSommet == -1){
             System.out.println("ce sommet n'existe pas");
             return;
         }
-        else if(findSommet(index).getCouleur() == Couleur.BLEU){
+        else if(findSommet(valeur).getCouleur() == Couleur.BLEU){
             System.out.println("vous ne pouvez supprimer que les sommets de couleur bleu");
             return;
         }
 
         // changer la couleur des sommets visés par les flèches
-        Vecteur v = findVecteur(index);
+        Vecteur v = findVecteur(valeur);
         int indexOfVecteur1 = -1;
+
+        //listVecteurs.stream().filter(vecteur -> vecteur.getSommet1().getValeur() == valeur || vecteur.getSommet2().getValeur() == valeur);
 
         if(v != null){
             indexOfVecteur1 = listVecteurs.indexOf(v);
@@ -62,7 +65,7 @@ public class Graphe {
             }
         }
 
-        v = findVecteur(index - 1);
+        v = findVecteur(valeur - 1);
         int indexOfVecteur2 = -1;
 
         if(v != null){
@@ -120,7 +123,7 @@ public class Graphe {
     @Override
     public String toString(){
         String chaine = "";
-        for(int i = 0; i < listeSommets.size() - 1; i++){
+        for(int i = 0; i < listeSommets.size(); i++){
             int val =listeSommets.get(i).getValeur();
             if(listeSommets.get(i).getCouleur() == Couleur.ROUGE){
                 chaine += "R" + val;
