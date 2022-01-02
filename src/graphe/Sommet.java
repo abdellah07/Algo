@@ -1,5 +1,6 @@
 package graphe;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -39,22 +40,10 @@ public class Sommet implements Comparable<Sommet>{
         return couleur.equals(Couleur.ROUGE);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Sommet sommet = (Sommet) o;
-        return valeur == sommet.valeur && couleur == sommet.couleur;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(valeur, couleur);
-    }
 
     @Override
     public int compareTo(Sommet o) {
-        if(this==o)
+        if(o == this)
             return 0;
         if(o.isRed() && !this.isRed())
             return 1;
@@ -69,11 +58,9 @@ public class Sommet implements Comparable<Sommet>{
         List<Vecteur> vectorSorta1 = ClasseInstance.graphe.getVecteurSortant(this);
         List<Vecteur> vectorSorta2 = ClasseInstance.graphe.getVecteurSortant(o);
 
-        List<Vecteur> vectorRouge1 = vectorSorta1.stream().filter(vecteur -> vecteur.getCouleur().equals(Couleur.ROUGE)).collect(Collectors.toList());
-        List<Vecteur> vectorRouge2 = vectorSorta2.stream().filter(vecteur -> vecteur.getCouleur().equals(Couleur.ROUGE)).collect(Collectors.toList());
 
-        value1 += vectorRouge1.size()+0.1;
-        value2 += vectorRouge2.size();
+        value1 += vectorSorta1.size();
+        value2 += vectorSorta2.size();
 
         return Integer.compare(value1,value2);
     }
