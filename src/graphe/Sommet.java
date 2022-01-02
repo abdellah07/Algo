@@ -1,8 +1,10 @@
 package graphe;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
-public class Sommet {
+public class Sommet implements Comparable<Sommet>{
     private int valeur;
     private Couleur couleur;
 
@@ -20,19 +22,21 @@ public class Sommet {
         this.couleur = couleur;
     }
 
-    public Sommet(int valeur, Couleur couleur) {
+    public Sommet(int valeur, Couleur couleur,Graphe graphe) {
         this.valeur = valeur;
         this.couleur = couleur;
     }
 
-    public boolean isRed(){
-        return couleur.equals(Couleur.ROUGE);
-    }
+
     public Sommet(int valeur, double p) {
         // p : la probabilité pour un sommet d'etre rouge
         // 1-p : la probabilité pour un sommet d'etre bleu
         this.valeur = valeur;
         this.couleur = Couleur.getCouleur(p);
+    }
+
+    public boolean isRed(){
+        return couleur.equals(Couleur.ROUGE);
     }
 
     @Override
@@ -46,5 +50,29 @@ public class Sommet {
     @Override
     public int hashCode() {
         return Objects.hash(valeur, couleur);
+    }
+
+    @Override
+    public int compareTo(Sommet o) {
+        if(o.isRed() && !this.isRed())
+            return 1;
+        if(!o.isRed() && this.isRed())
+            return -1;
+        if (!o.isRed() && !this.isRed())
+            return 0;
+
+        int value1 = 0;
+        int value2 = 0;
+
+        List<Vecteur> vectorSorta1 = ClasseInstance.graphe.getVecteurSortant(this);
+        List<Vecteur> vectorSorta2 = ClasseInstance.graphe.getVecteurSortant(o);
+
+        List<Vecteur> vectorRouge1 = vectorSorta1.stream().filter(vecteur -> vecteur.getCouleur().equals(Couleur.ROUGE)).collect(Collectors.toList());
+        List<Vecteur> vectorRouge2 = vectorSorta2.stream().filter(vecteur -> vecteur.getCouleur().equals(Couleur.ROUGE)).collect(Collectors.toList());
+
+        value1 += vectorRouge1.size();
+        value2 += vectorRouge2.size();
+
+        return Integer.compare(value1,value2);
     }
 }

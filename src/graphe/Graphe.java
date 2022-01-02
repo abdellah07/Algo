@@ -3,6 +3,7 @@ package graphe;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class Graphe {
     List<Sommet> listeSommets;
@@ -182,6 +183,20 @@ public class Graphe {
         return sommets;
     }
 
+    public List<Vecteur> getVecteurSortant(Sommet sommet){
+        List<Vecteur> vecteurs = new ArrayList<>();
+        if(listeSommets.contains(sommet)){
+            for (Vecteur vecteur: listVecteurs) {
+                if(vecteur.have(sommet)){
+                    if(vecteur.getSens().equals(SensVecteur.DROITE) && vecteur.getSommet1() == sommet || vecteur.getSens().equals(SensVecteur.GAUCHE) && vecteur.getSommet2() == sommet){
+                        vecteurs.add(vecteur);
+                    }
+                }
+            }
+        }
+        return vecteurs;
+    }
+
     public Optional<Vecteur> getVecteur(Sommet sommet1, Sommet sommet2){
         for (Vecteur vecteur: listVecteurs) {
             if((vecteur.getSommet1() == sommet1 && vecteur.getSommet2() == sommet2) || (vecteur.getSommet1() == sommet2 && vecteur.getSommet2() == sommet1)){
@@ -189,5 +204,19 @@ public class Graphe {
             }
         }
         return Optional.empty();
+    }
+
+    public int nombreDeRouge(){
+        return listeSommets.stream()
+                .filter(sommet -> sommet.isRed())
+                .collect(Collectors.toList())
+                .size();
+    }
+
+    public int nombreDeBleu(){
+        return listeSommets.stream()
+                .filter(sommet -> !sommet.isRed())
+                .collect(Collectors.toList())
+                .size();
     }
 }
