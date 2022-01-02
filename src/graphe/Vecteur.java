@@ -1,3 +1,5 @@
+package graphe;
+
 public class Vecteur {
     private Couleur couleur;
     private SensVecteur sens;
@@ -41,7 +43,6 @@ public class Vecteur {
 
     public Vecteur(double q, double r, Sommet sommet1, Sommet sommet2) {
         if(sommet1.getValeur() > 0){
-
             this.sens = SensVecteur.getSens(r);
         }else{
             this.sens = SensVecteur.DROITE;
@@ -51,5 +52,9 @@ public class Vecteur {
 
         this.sommet1 = sommet1;
         this.sommet2 = sommet2;
+    }
+
+    boolean have(Sommet sommet){
+        return sommet1 == sommet || sommet2 == sommet;
     }
 }

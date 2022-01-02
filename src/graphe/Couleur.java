@@ -1,3 +1,5 @@
+package graphe;
+
 public enum Couleur {
     ROUGE(0),
     BLEU(1);

@@ -1,3 +1,5 @@
+package graphe;
+
 public enum SensVecteur {
     GAUCHE(0),
     DROITE(1);

@@ -1,5 +1,8 @@
+package graphe;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Graphe {
     List<Sommet> listeSommets;
@@ -109,6 +112,10 @@ public class Graphe {
         return -1;
     }
 
+    public List<Sommet> getListeSommets() {
+        return listeSommets;
+    }
+
     @Override
     public String toString(){
         String chaine = "";
@@ -141,5 +148,46 @@ public class Graphe {
             }
         }
         return chaine;
+    }
+
+    public List<Sommet> getSommetEntrants(Sommet sommet){
+        List<Sommet> sommets = new ArrayList<>();
+        if(listeSommets.contains(sommet)){
+            for (Vecteur vecteur: listVecteurs) {
+                if(vecteur.have(sommet)){
+                    if(vecteur.getSens().equals(SensVecteur.DROITE) && vecteur.getSommet2() == sommet){
+                            sommets.add(vecteur.getSommet1());
+                    }else if(vecteur.getSens().equals(SensVecteur.GAUCHE) && vecteur.getSommet1() == sommet){
+                            sommets.add(vecteur.getSommet2());
+                    }
+                }
+            }
+        }
+        return sommets;
+    }
+
+    public List<Sommet> getSommetSortant(Sommet sommet){
+        List<Sommet> sommets = new ArrayList<>();
+        if(listeSommets.contains(sommet)){
+            for (Vecteur vecteur: listVecteurs) {
+                if(vecteur.have(sommet)){
+                    if(vecteur.getSens().equals(SensVecteur.DROITE) && vecteur.getSommet1() == sommet){
+                        sommets.add(vecteur.getSommet2());
+                    }else if(vecteur.getSens().equals(SensVecteur.GAUCHE) && vecteur.getSommet2() == sommet){
+                        sommets.add(vecteur.getSommet1());
+                    }
+                }
+            }
+        }
+        return sommets;
+    }
+
+    public Optional<Vecteur> getVecteur(Sommet sommet1, Sommet sommet2){
+        for (Vecteur vecteur: listVecteurs) {
+            if((vecteur.getSommet1() == sommet1 && vecteur.getSommet2() == sommet2) || (vecteur.getSommet1() == sommet2 && vecteur.getSommet2() == sommet1)){
+                return Optional.of(vecteur);
+            }
+        }
+        return Optional.empty();
     }
 }

@@ -1,3 +1,5 @@
+package graphe;
+
 public class ClasseInstance {
     public static Graphe graphe;
 
