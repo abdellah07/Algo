@@ -33,12 +33,14 @@ public class RougeBleu {
         Graphe graphe = ClasseInstance.graphe;
         do{
             List<Sommet> sommets = graphe.getListeSommets();
-            Collections.sort(sommets);
+            Object[] sommets1 = sommets.toArray();
+            Arrays.sort(sommets1);
+
             if(sommets.isEmpty())
                 break;
-            if (!sommets.get(0).isRed())
+            if (!((Sommet)sommets1[0]).isRed())
                 break;
-            graphe.supprimerSommet(sommets.get(0).getValeur());
+            graphe.supprimerSommet(((Sommet)sommets1[0]).getValeur());
             k++;
         }while(true);
         return graphe;
